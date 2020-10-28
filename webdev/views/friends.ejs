@@ -1,0 +1,14 @@
+<%- include("parts/header.ejs")%>
+
+<h1> Friends </h1>
+
+<%friends.forEach(function(friend){%>
+<li> <%=friend%> </li>
+<%})%>
+
+<form action="/friends" method="POST">
+	<input type="text" placeholder="friend name" name="friend"/>
+	<button> Submit </button>
+</form>
+
+<%- include("parts/footer.ejs")%>
