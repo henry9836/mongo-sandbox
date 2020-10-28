@@ -70,7 +70,7 @@ function checkOwnership(req, res, next){
 					res.redirect("back");
 				}
 			}
-		})
+		)
 	}
 	
 	res.redirect("back");
