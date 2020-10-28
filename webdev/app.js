@@ -66,7 +66,7 @@ function checkOwnership(req, res, next){
 				if (cat.author.id.equals(req.user.id)){
 					next();
 				}
-				else{
+				else
 					res.redirect("back");
 				}
 			}
