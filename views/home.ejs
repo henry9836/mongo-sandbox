@@ -1,0 +1,15 @@
+<%- include("parts/header.ejs")%>
+
+<div id="banner">
+<h1> Henry's Crummy Emporium </h1>
+
+<% if(authed === true){ %>
+	<a href="/logout">Logout</a><br>
+<% } else { %> 
+	<a href="/register"> Sign Up </a>
+	<a href="/login"> Login </a>
+<% } %>
+	
+</div>
+
+<%- include("parts/footer.ejs")%>

@@ -10,15 +10,6 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var app = express();
 
-var friendBook = ["Vaughan", "Harry"];
-
-//Schemas
-var catsSchema = mongoose.Schema({
-	name: String,
-	age: Number,
-	isCatGirl: Boolean
-});
-var Cat = mongoose.model("Cat", catsSchema);
 var userSchema = new mongoose.Schema({
 	username: String,
 	password: String
@@ -48,177 +39,111 @@ passport.deserializeUser(User.deserializeUser());
 console.log("[+] Connecting To Database...")
 mongoose.connect("mongodb://localhost/users");
 
-function isLoggedIn(req, res, next){
-	if (req.isAuthenticated()){
-		return next();
-	}
-	
-	res.redirect("/authTest");
-}
-
-function checkOwnership(req, res, next){
-	if (req.isAuthenticated()){
-		Cat.findById(req.params.id, function(err, cat){
-			if (err){
-				res.redirect("back");
-			}
-			else{
-				if (cat.author.id.equals(req.user.id)){
-					next();
-				}
-				else
-					res.redirect("back");
-				}
-			}
-		)
-	}
-	
-	res.redirect("back");
-}
-
-
 app.listen(process.env.PORT || "3000", process.env.IP, function(){
 	console.log("[+] PORT BOUND");	
 });
 
+function debugDB(err, done){
+	if (err){
+		console.log("Failed to create entry in DB");
+	}
+	else{
+		console.log("Entry succesfully added to DB");
+	}
+}
 
-app.get("/", function(req, res){
-	//res.send("Done.");
-	res.render("landing.ejs");
-});
-
-app.get("/debug/:data", function(req, res){
-	var data = req.params.data;
-	res.render("data.ejs", {data: data});
-});
-
-app.get("/posts", function(req, res){
-	var data = [
-		{title: "title1", author: "Anon1"},
-		{title: "title2", author: "Anon2"},
-		{title: "title3", author: "Anon3"},
-		{title: "title4", author: "Anon4"},
-	];
-	res.render("posts.ejs", {posts: data});
-});
-
-app.get("/cats", isLoggedIn, function(req, res){
-	
-	Cat.find({}, function(err, data){
-		if (err){
-			console.log("Databse error :S")
-		}
-		else{
-			res.render("cats.ejs", {cats: data});
-		}
+function createUser(_username, _password, res){
+	//Construct User
+	var tmpUser = new User({
+		username: _username,
+		password: _password
 	})
-});
-
-app.post("/cats", isLoggedIn, function(req, res){
 	
-	console.log(req.body);
-	
-	var isGirl = false;
-	isGirl = (req.body.catGirl == 'on');
-	
-	createNewCat(req.body.catName, req.body.catAge, isGirl);
-	
-	res.redirect("/cats");
-});
-app.get("/cats/:id/edit", checkOwnership,function(req, res){
-	
-	Cat.findById(req.params.id, function(err, cat){
-		res.render("edit.ejs", {cat: cat})
-  	});
-	
-	res.render("authTest.ejs");
-});
-
-
-app.get("/friends", function(req, res){
-	res.render("friends.ejs", {friends: friendBook});
-});
-
-app.post("/friends", function(req, res){
-	//console.log(req);
-	console.log(req.body);
-	
-	friendBook.push(req.body.friend);
-	
-	res.redirect("/friends");
-});
-
-app.get("/login", function(req,res){
-	res.render("login.ejs");
-})
-
-app.post("/login", passport.authenticate("local", {
-		successRedirect: "/cats",
-		failureRedirect: "/login"
-	}), function(req, res){
-	
-	console.log("login got post");
-	
-});
-
-app.post("/signUp", function(req, res){
-	var username = req.body.username;
-	var password = req.body.password;
-	
-	console.log(req.body);
-	
-	User.register(new User({username: username}), password, function(err, user){
+	User.register(new User({username: tmpUser.username}), tmpUser.password, function(err, user){
 		if (err){
+			//Failed
 			console.log(err);
-			return res.render("signUp.ejs");
+			return res.render("register", {errorText: err});
 		}
 		else{
 			passport.authenticate("local")(req, res, function(){
-				res.redirect("/cats");
+				//Redirect user
+				res.redirect("home")
+			})
+		}
+	})
+	
+	//Save onto db
+	//user.save(debugDB);
+	
+	//return user;
+}
+
+app.get("/", function(req, res){
+	//Check passport
+	var authed = req.isAuthenticated();
+	
+	res.render("home.ejs", {authed: authed});
+});
+
+app.get("/logout", function(req,res){
+	req.logout();
+	//Check passport
+	var authed = req.isAuthenticated();
+	res.render("home.ejs", {authed: authed});
+});
+
+app.get("/login", function(req,res){
+	res.render("login.ejs", {errorText: ""});
+});
+
+app.get("/register", function(req,res){
+	res.render("register.ejs", {errorText: ""});
+});
+
+app.post("/register", function(req,res){
+	console.log(req.body);
+	var _username = req.body.username;
+	var _password = req.body.password;
+	
+	User.register(new User({username: _username}), _password, function(err, user){
+		if (err){
+			//Failed
+			console.log("Error: " + err);
+			return res.render("register.ejs", {errorText: err});
+		}
+		else{
+			passport.authenticate("local")(req, res, function(){
+				//Redirect user
+				res.redirect("/")
 			})
 		}
 	})
 });
 
-app.get("/signUp", function(req, res){
-	res.render("signUp.ejs");
-});
-
-app.get("/logout", function(req, res){
-	req.logout();
-	res.redirect("/");
-});
-
-app.get("/authTest", function(req, res){
-	res.render("authTest.ejs");
-});
-
-function createNewCat(_name, _age, _isCatGirl){
-	var obj = new Cat({
-		name:_name,
-		age:_age,
-		isCatGirl:_isCatGirl
-	})
-	
-	obj.save(errCallBack);
-	
-	return obj;
-}
-
-function errCallBack(err, done){
-	if (err){
-		console.log("info not found")
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { 
+		console.log("ERROR: " + err);
+		return res.render('login.ejs', {errorText: "Interal Server Error"}); 
 	}
-	else{
-		console.log("info saved!")
+    if (!user) { 
+		console.log("ERROR: user is null");
+		return res.render('login.ejs', {errorText: "Username/Password doesn't exist"}); 
 	}
-}
+    req.logIn(user, function(err) {
+      if (err) { 
+		  console.log("ERROR2: " + err);
+		  return res.render('login.ejs', {errorText: "Interal Server Error"}); 
+	  }
+	console.log('Loggedin');
+    return res.redirect('/');
+    });
+  })(req, res, next);
+});
 
 function main(){
 	console.log("[+] Ready.");
-	
-	//Add onto db
-	//createNewCat("Koneko", 15, true);
 }
 
 main();
