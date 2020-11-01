@@ -1,0 +1,26 @@
+<%- include("parts/header.ejs")%>
+
+<div id="banner">
+<h1> Henry's Crummy Emporium </h1>
+
+<h2> Welcome back <%=username%> </h2>
+	<form action="/newListing" method="POST">
+		<input type="text" placeholder="Title" name="title"/>
+		<input type="text" placeholder="Short Description" name="desc"/>
+		<input type="url" placeholder="Image Link" name="img"/>
+		<input type="number" step=".01" placeholder="10.0" name="price"/>
+		<button>
+			Create listing
+		</button>
+		
+	</form>
+
+<br>
+	
+<a href="/profile">Back to My Profile</a><br>
+<a href="/">Back to Listings</a><br>
+<a href="/logout">Logout</a><br>
+
+</div>
+
+<%- include("parts/footer.ejs")%>

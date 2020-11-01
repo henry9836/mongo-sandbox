@@ -4,12 +4,25 @@
 <h1> Henry's Crummy Emporium </h1>
 
 <% if(authed === true){ %>
+	<a href="/profile">My Profile</a><br>
 	<a href="/logout">Logout</a><br>
 <% } else { %> 
 	<a href="/register"> Sign Up </a>
 	<a href="/login"> Login </a>
 <% } %>
 	
+</div>
+
+<h2> Listings </h2>
+
+<%listings.forEach(function(listing){%>
+
+<div> <%=listing.title%> is a listing </div>
+
+<%})%>
+
+<div style="color:red">
+	<%=errorText %>
 </div>
 
 <%- include("parts/footer.ejs")%>

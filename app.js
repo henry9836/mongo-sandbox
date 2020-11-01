@@ -10,6 +10,16 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var app = express();
 
+console.log("[+] Building Schemes...")
+var listingScheme = new mongoose.Schema({
+	title: String,
+	desc: String,
+	img: String,
+	price: Number,
+	lister: String,
+	user_id: String
+});
+
 var userSchema = new mongoose.Schema({
 	username: String,
 	password: String
@@ -17,8 +27,9 @@ var userSchema = new mongoose.Schema({
 //Add more stuff to userSchema
 userSchema.plugin(passportLocalMongoose);
 var User = mongoose.model("User", userSchema);
+var Listing = mongoose.model("Listing", listingScheme);
 
-console.log("[+] Setting up params...")
+console.log("[+] Setting up Params...")
 //Set static so we don't have to type /public all the time
 app.use(express.static("public"));
 app.use(parser.urlencoded({extended: true}));
@@ -82,8 +93,29 @@ function createUser(_username, _password, res){
 app.get("/", function(req, res){
 	//Check passport
 	var authed = req.isAuthenticated();
+	var errText = "";
+	//Get listings
+	Listing.find({}, function(err, data){
+		if (err){
+			errText = "Could not load listings";
+			console.log(err);
+			res.render("home.ejs", {authed: authed, errorText: errText, listings: data});
+		}
+		else{
+			res.render("home.ejs", {authed: authed, errorText: errText, listings: data});
+		}
+	})
+});
+
+app.get("/profile", function(req, res){
+	//Check passport
+	if (req.isAuthenticated() === false){
+		return res.redirect("/login");
+	}
 	
-	res.render("home.ejs", {authed: authed});
+	console.log(req.user);
+	
+	res.render("profile.ejs", {username: req.user.username});
 });
 
 app.get("/logout", function(req,res){
@@ -140,6 +172,37 @@ app.post('/login', function(req, res, next) {
     return res.redirect('/');
     });
   })(req, res, next);
+});
+
+app.get("/newListing", function(req,res){
+	//Check passport
+	if (req.isAuthenticated() === false){
+		return res.redirect("/login");
+	}
+	
+	res.render("newListing.ejs", {username: req.user.username});
+});
+
+app.post("/newListing", function(req,res){
+	//Check passport
+	if (req.isAuthenticated() === false){
+		return res.redirect("/login");
+	}
+	
+	//Construct Lisiting
+	var tmpListing = new Listing({
+		title: req.body.title,
+		desc: req.body.desc,
+		img: req.body.img,
+		price: req.body.price,
+		lister: req.user.username,
+		user_id: req.user._id
+	})
+	
+	//Save onto db
+	tmpListing.save(debugDB);
+	
+	res.redirect("/");
 });
 
 function main(){
