@@ -55,6 +55,31 @@ app.listen(process.env.PORT || "3000", process.env.IP, function(){
 	console.log("[+] PORT BOUND");	
 });
 
+function checkOwnership(req, res, next){
+	console.log(req);
+	console.log(res);
+	
+	if (req.isAuthenticated()){
+		Listing.findById(req.params.id, function(err, entry){
+			if (err){
+				console.log(err)
+			}
+			else{
+				if (entry.user_id.equals(req.user.id)){
+					next()
+				}
+				else{
+					res.redirect("back");
+				}
+			}
+		})
+	}
+	else{
+		res.redirect("back");
+	}
+	
+}
+
 function debugDB(err, done){
 	if (err){
 		console.log("Failed to create entry in DB");
@@ -90,7 +115,7 @@ app.get("/profile", function(req, res){
 	
 	console.log(req.user);
 	
-	res.render("profile.ejs", {username: req.user.username});
+	res.render("profile.ejs", {username: req.user.username, authed: true});
 });
 
 app.get("/logout", function(req,res){
@@ -154,7 +179,7 @@ app.post('/login', function(req, res, next) {
 		  return res.render('login.ejs', {errorText: "Interal Server Error"}); 
 	  }
 	console.log('Loggedin');
-    return res.redirect('/');
+    return res.redirect('/profile');
     });
   })(req, res, next);
 });
@@ -165,7 +190,7 @@ app.get("/newListing", function(req,res){
 		return res.redirect("/login");
 	}
 	
-	res.render("newListing.ejs", {username: req.user.username});
+	res.render("newListing.ejs", {username: req.user.username, authed: true});
 });
 
 app.post("/newListing", function(req,res){
@@ -191,6 +216,40 @@ app.post("/newListing", function(req,res){
 	res.redirect("/");
 });
 
+app.get("/listing/:id", function(req,res){
+	
+	var isOwner = false;
+	var requestID = "";
+	//Check if owner
+	if (req.isAuthenticated()){
+		requestID = req.user._id;
+	}
+	
+	console.log(req.params);
+	
+	Listing.findById(req.params.id, function(err, listing){
+		if (err){
+			console.log(err);
+			res.redirect("back");
+		}
+		else{
+			console.log("Found!");
+			//Check if owner
+			if (req.isAuthenticated()){
+				isOwner = (listing.user_id == req.user._id);
+				res.render("listing.ejs", {owner: isOwner, listing: listing, authed: true});
+			}
+			else{
+				res.render("listing.ejs", {owner: false, listing: listing, authed: false});
+			}
+		}
+	})
+});
+
+app.get("/listing/:id/edit", checkOwnership,function(req, res){
+	console.log("YAYAYYAYAY");
+	res.redirect("back");
+});
 function main(){
 	console.log("[+] Ready.");
 }

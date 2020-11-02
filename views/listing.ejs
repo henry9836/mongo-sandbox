@@ -1,0 +1,24 @@
+<%- include("parts/header.ejs")%>
+<%- include("parts/navbar.ejs")%>
+
+<h1> <%=listing.title %> </h1>
+<img src="<%=listing.img%>"> </img>
+<h3> $<%=listing.price%> </h3>	
+<h5> Listed by: <%=listing.lister%> </h5>	
+
+<p>
+<%=listing.fullDesc%>	
+</p>
+<% if (owner){%> 
+	<br>
+	<a class="btn btn-warning" href="/listing/<%=listing.user_id%>/edit" role="button">Edit</a>
+	<form id="delete-form" action="/listing/<%=listing.user_id%>/delete?_method=DELETE" method="POST">
+		<button class="btn btn-danger">Delete</button>
+	</form>
+	<br>
+<%}%>
+	
+<br>
+<a class="btn btn-primary" href="/">Back to Listings</a>
+
+<%- include("parts/footer.ejs")%>

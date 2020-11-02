@@ -1,0 +1,13 @@
+<nav class="navbar navbar-light bg-dark justify-content-between">
+  	<h1> Henry's Crummy Emporium </h1>
+
+	<div>
+	<% if(authed === true){ %>
+		<a class="btn btn-primary" href="/profile">My Profile</a>
+		<a class="btn btn-danger" href="/logout">Logout</a><br>
+	<% } else { %> 
+		<a class="btn btn-primary" href="/register"> Sign Up </a>
+		<a class="btn btn-primary" href="/login"> Login </a>
+	<% } %>
+	</div>
+</nav>
