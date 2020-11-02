@@ -14,6 +14,7 @@ console.log("[+] Building Schemes...")
 var listingScheme = new mongoose.Schema({
 	title: String,
 	desc: String,
+	fullDesc: String,
 	img: String,
 	price: Number,
 	lister: String,
@@ -57,37 +58,11 @@ app.listen(process.env.PORT || "3000", process.env.IP, function(){
 function debugDB(err, done){
 	if (err){
 		console.log("Failed to create entry in DB");
+		console.log(err);
 	}
 	else{
 		console.log("Entry succesfully added to DB");
 	}
-}
-
-function createUser(_username, _password, res){
-	//Construct User
-	var tmpUser = new User({
-		username: _username,
-		password: _password
-	})
-	
-	User.register(new User({username: tmpUser.username}), tmpUser.password, function(err, user){
-		if (err){
-			//Failed
-			console.log(err);
-			return res.render("register", {errorText: err});
-		}
-		else{
-			passport.authenticate("local")(req, res, function(){
-				//Redirect user
-				res.redirect("home")
-			})
-		}
-	})
-	
-	//Save onto db
-	//user.save(debugDB);
-	
-	//return user;
 }
 
 app.get("/", function(req, res){
@@ -203,6 +178,7 @@ app.post("/newListing", function(req,res){
 	var tmpListing = new Listing({
 		title: req.body.title,
 		desc: req.body.desc,
+		fullDesc: req.body.fullDesc,
 		img: req.body.img,
 		price: req.body.price,
 		lister: req.user.username,

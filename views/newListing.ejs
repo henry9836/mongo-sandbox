@@ -7,8 +7,9 @@
 	<form action="/newListing" method="POST">
 		<input type="text" placeholder="Title" name="title"/> <br>
 		<input type="text" placeholder="Short Description" name="desc"/><br>
+		<input type="text" placeholder="Full Description" name="fullDesc"/><br>
 		<input type="url" placeholder="Image Link" name="img"/><br>
-		<input type="number" step=".01" placeholder="10.0" name="price"/><br>
+		<input type="number" step=".01" placeholder="Price" min="0.1" name="price"/><br>
 		<button type="submit" class="btn btn-success">
 			Create listing
 		</button>

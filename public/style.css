@@ -1,9 +1,5 @@
 body{
 	background-color: #1c1c1c;
 	color: white;
-}
-
-table, th, td {
-	margin: 1px;
-  border: 1px solid white;
+	word-wrap: break-word;
 }
