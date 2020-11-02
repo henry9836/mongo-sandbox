@@ -17,7 +17,22 @@
 
 <%listings.forEach(function(listing){%>
 
-<div> <%=listing.title%> is a listing </div>
+<div style='background-color: black; width: 25vw; margin:1vw; padding: 1vw'> 
+	<div>
+		<div style="text-align: center">
+		<b><%=listing.title%> </b>
+		</div>
+		<div style="text-align: right">
+		$<%=listing.price%>
+		</div>
+		<br>
+		Description<br>
+		<%=listing.desc%>
+	</div>
+	<br>
+	<img src='<%=listing.img%>' width="auto" height="auto" margin="auto" display="block"> </img>
+	<br>
+</div>
 
 <%})%>
 
