@@ -6,13 +6,14 @@
 <h3> $<%=listing.price%> </h3>	
 <h5> Listed by: <%=listing.lister%> </h5>	
 
+	<%=listing._id%>
 <p>
 <%=listing.fullDesc%>	
 </p>
 <% if (owner){%> 
 	<br>
-	<a class="btn btn-warning" href="/listing/<%=listing.user_id%>/edit" role="button">Edit</a>
-	<form id="delete-form" action="/listing/<%=listing.user_id%>/delete?_method=DELETE" method="POST">
+	<a class="btn btn-warning" href="/listing/<%=listing._id%>/edit" role="button">Edit</a>
+	<form id="delete-form" action="/listing/<%=listing._id%>/delete?_method=DELETE" method="POST">
 		<button class="btn btn-danger">Delete</button>
 	</form>
 	<br>

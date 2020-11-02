@@ -56,17 +56,23 @@ app.listen(process.env.PORT || "3000", process.env.IP, function(){
 });
 
 function checkOwnership(req, res, next){
-	console.log(req);
-	console.log(res);
+	var id = req.params.id;
+	var user = req.user;
+	console.log("User info: " + user);
+	console.log("Looking for ID: " + id);
 	
 	if (req.isAuthenticated()){
-		Listing.findById(req.params.id, function(err, entry){
+		const tmp = Listing.findById(id);
+		console.log("TMP: " + tmp.title);
+		Listing.findById(id, function(err, listing){
 			if (err){
-				console.log(err)
+				console.log(err);
+				res.redirect("back");
 			}
 			else{
-				if (entry.user_id.equals(req.user.id)){
-					next()
+				console.log("listing info: " + listing);
+				if (listing.user_id == user._id){
+					next();
 				}
 				else{
 					res.redirect("back");
@@ -246,9 +252,18 @@ app.get("/listing/:id", function(req,res){
 	})
 });
 
-app.get("/listing/:id/edit", checkOwnership,function(req, res){
-	console.log("YAYAYYAYAY");
-	res.redirect("back");
+app.get("/listing/:id/edit", checkOwnership, function(req, res){
+	//Get reference to listing
+	Listing.findById(req.params.id, function(err, tmpListing){
+			if (err){
+				console.log(err);
+				res.redirect("back");
+			}
+			else{
+				//Authed and own the listing
+				res.render("edit.ejs", {authed: true, username:req.user.username, listing: tmpListing});
+			}
+	})
 });
 function main(){
 	console.log("[+] Ready.");

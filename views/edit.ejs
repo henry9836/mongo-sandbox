@@ -2,24 +2,19 @@
 <%- include("parts/navbar.ejs")%>
 
 <h2> Welcome back <%=username%> </h2>
-	<form action="/newListing" method="POST">
-		<input type="text" placeholder="Title" name="title"/> <br>
-		<input type="text" placeholder="Short Description" name="desc"/><br>
-		<input type="text" placeholder="Full Description" name="fullDesc"/><br>
-		<input type="url" placeholder="Image Link" name="img"/><br>
-		<input type="number" step=".01" placeholder="Price" min="0.1" name="price"/><br>
-		<button type="submit" class="btn btn-success">
-			Create listing
-		</button>
-		
-	</form>
-
+<form action="/newListing" method="POST">
+	<input type="text" placeholder="<%=listing.title%>" name="title"/> <br>
+	<input type="text" placeholder="<%=listing.desc%>" name="desc"/><br>
+	<input type="text" placeholder="<%=listing.fullDesc%>" name="fullDesc"/><br>
+	<input type="url" placeholder="<%=listing.img%>" name="img"/><br>
+	<input type="number" step=".01" placeholder="<%=listing.price%>" min="0.1" name="price"/><br>
+	<button type="submit" class="btn btn-success">
+		Update listing
+	</button>
+</form>
 <br>
-	
-<a class="btn btn-primary" href="/profile">Back to My Profile</a><br>
-<a class="btn btn-primary" href="/">Back to Listings</a><br>
-<a class="btn btn-danger" href="/logout">Logout</a><br>
 
-</div>
+<a class="btn btn-primary" href="/listing/">Back to Listing</a><br>
+<a class="btn btn-danger" href="/logout">Logout</a><br>
 
 <%- include("parts/footer.ejs")%>
