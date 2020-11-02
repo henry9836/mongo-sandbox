@@ -119,10 +119,20 @@ app.get("/profile", function(req, res){
 });
 
 app.get("/logout", function(req,res){
+	var errText = "";
 	req.logout();
 	//Check passport
 	var authed = req.isAuthenticated();
-	res.render("home.ejs", {authed: authed});
+	Listing.find({}, function(err, data){
+		if (err){
+			errText = "Could not load listings";
+			console.log(err);
+			res.render("home.ejs", {authed: authed, errorText: errText, listings: data});
+		}
+		else{
+			res.render("home.ejs", {authed: authed, errorText: errText, listings: data});
+		}
+	})
 });
 
 app.get("/login", function(req,res){

@@ -4,11 +4,11 @@
 <h1> Henry's Crummy Emporium </h1>
 
 <% if(authed === true){ %>
-	<a href="/profile">My Profile</a><br>
-	<a href="/logout">Logout</a><br>
+	<a class="btn btn-primary" href="/profile">My Profile</a>
+	<a class="btn btn-danger" href="/logout">Logout</a><br>
 <% } else { %> 
-	<a href="/register"> Sign Up </a>
-	<a href="/login"> Login </a>
+	<a class="btn btn-primary" href="/register"> Sign Up </a>
+	<a class="btn btn-primary" href="/login"> Login </a>
 <% } %>
 	
 </div>
@@ -20,20 +20,20 @@
 <div style='background-color: black; width: 25vw; margin:1vw; padding: 1vw'> 
 	<div>
 		<div style="text-align: center">
-		<b><%=listing.title%> </b>
-		</div>
-		<div style="text-align: right">
-		$<%=listing.price%>
+			<b><%=listing.title%> </b>
+			</div>
+			<div style="text-align: right">
+			$<%=listing.price%>
+			</div>
+			<br>
+			Description<br>
+			<%=listing.desc%>
 		</div>
 		<br>
-		Description<br>
-		<%=listing.desc%>
+		<img src='<%=listing.img%>' width="auto" height="auto" margin="auto" display="block"> </img>
+		<br>
+		Listed by: <%=listing.lister%>
 	</div>
-	<br>
-	<img src='<%=listing.img%>' width="auto" height="auto" margin="auto" display="block"> </img>
-	<br>
-</div>
-
 <%})%>
 
 <div style="color:red">
