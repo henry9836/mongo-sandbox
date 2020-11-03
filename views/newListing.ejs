@@ -3,9 +3,9 @@
 
 <h2> Welcome back <%=username%> </h2>
 	<form action="/newListing" method="POST">
-		<input type="text" placeholder="Title" name="title"/> <br>
-		<input type="text" placeholder="Short Description" name="desc"/><br>
-		<input type="text" placeholder="Full Description" name="fullDesc"/><br>
+		<input type="text" placeholder="Title" name="title" maxlength="100"/> <br>
+		<input type="text" placeholder="Short Description" name="desc" maxlength="280"/><br>
+		<input type="text" placeholder="Full Description" name="fullDesc" maxlength="1000"/><br>
 		<input type="url" placeholder="Image Link" name="img"/><br>
 		<input type="number" step=".01" placeholder="Price" min="0.1" name="price"/><br>
 		<button type="submit" class="btn btn-success">
