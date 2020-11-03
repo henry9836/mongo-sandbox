@@ -64,6 +64,11 @@ function checkOwnership(req, res, next){
 	console.log("Checking Ownership");
 	
 	if (req.isAuthenticated()){
+		//Admin override
+		if (user.username === "admin"){
+			next();
+		}
+			
 		Listing.findById(id, function(err, listing){
 			if (err){
 				console.log(err);
