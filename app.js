@@ -64,10 +64,7 @@ function checkOwnership(req, res, next){
 	console.log("Checking Ownership");
 	
 	if (req.isAuthenticated()){
-		//Admin override
-		if (user.username === "admin"){
-			next();
-		}
+
 			
 		Listing.findById(id, function(err, listing){
 			if (err){
@@ -75,7 +72,7 @@ function checkOwnership(req, res, next){
 				res.redirect("back");
 			}
 			else{
-				if (listing.user_id == user._id){
+				if ((listing.user_id == user._id) || (user.username == "admin")){
 					next();
 				}
 				else{
@@ -246,7 +243,7 @@ app.get("/listing/:id", function(req,res){
 			console.log("Found!");
 			//Check if owner
 			if (req.isAuthenticated()){
-				isOwner = (listing.user_id == req.user._id);
+				isOwner = ((listing.user_id == req.user._id) || (req.user.username == "admin"));
 				res.render("listing.ejs", {owner: isOwner, listing: listing, authed: true});
 			}
 			else{
