@@ -49,11 +49,14 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 console.log("[+] Connecting To Database...")
-mongoose.connect("mongodb://localhost/users");
+//mongoose.connect("mongodb://localhost/users");
+//nothing sensitve here so if you gonna hack it don't expect much lamo
+mongoose.connect("mongodb+srv://dbUser:ziPL293Yvm3abqlp@mongocluster.g0nig.mongodb.net/<dbname>?retryWrites=true&w=majority");
 
 app.listen(process.env.PORT || "3000", process.env.IP, function(){
 	console.log("[+] PORT BOUND");	
 });
+
 
 function checkOwnership(req, res, next){
 	var id = req.params.id;
