@@ -5,7 +5,7 @@
 <form action="/listing/<%=listing._id%>?_method=PUT" method="POST">
 	<input type="text" value="<%=listing.title%>" name="listing[title]" maxlength="90"/> <br>
 	<input type="text" value="<%=listing.desc%>" name="listing[desc]" maxlength="280"/><br>
-	<input type="text" value="<%=listing.fullDesc%>" name="listing[fullDesc]" maxlength="2000"/><br>
+		<textarea type="text" placeholder="Full Description" name="fullDesc" maxlength="2000"></textarea><br>
 	<input type="url" value="<%=listing.img%>" name="listing[img]"/><br>
 	<input type="number" step=".01" value="<%=listing.price%>" min="0.1" name="listing[price]"/><br>
 	<button type="submit" class="btn btn-success">

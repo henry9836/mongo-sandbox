@@ -5,7 +5,7 @@
 	<form action="/newListing" method="POST">
 		<input type="text" placeholder="Title" name="title" maxlength="90"/> <br>
 		<input type="text" placeholder="Short Description" name="desc" maxlength="280"/><br>
-		<input type="text" placeholder="Full Description" name="fullDesc" maxlength="2000"/><br>
+		<textarea type="text" placeholder="Full Description" name="fullDesc" maxlength="2000"></textarea><br>
 		<input type="url" placeholder="Image Link" name="img"/><br>
 		<input type="number" step=".01" placeholder="Price" min="0.1" name="price"/><br>
 		<button type="submit" class="btn btn-success">
