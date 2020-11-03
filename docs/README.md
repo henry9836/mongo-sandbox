@@ -1,4 +1,6 @@
 # mongo-sandbox
-![Heroku](https://heroku-badge.herokuapp.com/?app=mongosandbox)
+![Heroku Status](https://heroku-badge.herokuapp.com/?app=mongosandbox)
+
+[Go To Website](mongosandbox.herokuapp.com)
 
 Description coming soon...
