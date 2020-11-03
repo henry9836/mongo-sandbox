@@ -3,27 +3,27 @@
 
 <h2> Welcome back <%=username%> </h2>
 <form action="/newListing" method="POST">
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<label for="title">Title</label>
-		<input type="text" class="form-control" id="title" placeholder="Title" name="title" maxlength="90"/>
+		<input type="text" class="form-control" id="title" placeholder="Title" name="title" maxlength="66" minlength="1"/>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<label for="desc">Short Description</label>
-		<input type="text" class="form-control" id="desc" placeholder="Short Description" name="desc" maxlength="280"/>
+		<input type="text" class="form-control" id="desc" placeholder="Short Description" name="desc" maxlength="280" minlength="5"/>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<label for="fullDesc">Full Description</label>
-		<textarea type="text" class="form-control" id="fullDesc" placeholder="Full Description" name="fullDesc" rows="8" maxlength="2000"></textarea>
+		<textarea type="text" class="form-control" id="fullDesc" placeholder="Full Description" name="fullDesc" rows="6" maxlength="2000" minlength="100"></textarea>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<label for="img">Image Link</label>
-		<input type="url" class="form-control" id="img" placeholder="Title" name="img"/>
+		<input type="url" class="form-control" id="img" placeholder="url" name="img" minlength="15"/>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<label for="price">Price</label>
-		<input type="number" class="form-control" id="price" placeholder="Title" name="price" step=".01" min="0.1"/>
+		<input type="number" class="form-control" id="price" value="1.00" name="price" step=".01" min="0.1"/>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-3">
 		<button type="submit" class="btn btn-primary"> Create listing </button>
 	</div>	
 </form>
