@@ -3,3 +3,7 @@ body{
 	color: white;
 	word-wrap: break-word;
 }
+
+.jumbotron {
+  background-color: #212121;
+}

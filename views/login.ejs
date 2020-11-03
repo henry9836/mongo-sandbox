@@ -3,13 +3,19 @@
 <h1> Login Portal </h1>
 
 <form action="/login" method="POST">
-	<input type="text" placeholder="Username" name="username" maxlength="40"/>
-	<input type="password" placeholder="Password" name="password" maxlength="100"/>
+<div class="form-group">
+	<label for="username">Username</label>
+    <input type="text" class="form-control" id="username" placeholder="username" name="username" maxlength="40">
+</div>
+<div class="form-group">
+	<label for="password">Password</label>
+    <input type="password" class="form-control" id="password" aria-describedby="passHelp" placeholder="password" name="password" maxlength="100">
+    <small id="userHelp" class="form-text" style="color:red"><%=errorText %></small>
+</div>
+<div class="form-group">
 	<button type="submit" class="btn btn-primary"> Submit </button>
+</div>	
 </form>
 
-<div style="color:red">
-<%=errorText %>
-</div>
 
 <%- include("parts/footer.ejs")%>

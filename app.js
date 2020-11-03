@@ -49,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 console.log("[+] Connecting To Database...")
-//mongoose.connect("mongodb://localhost/users");
+
 //nothing sensitve here so if you gonna hack it don't expect much lamo
 mongoose.connect("mongodb+srv://dbUser:ziPL293Yvm3abqlp@mongocluster.g0nig.mongodb.net/users?retryWrites=true&w=majority");
 
@@ -243,6 +243,7 @@ app.get("/listing/:id", function(req,res){
 			console.log("Found!");
 			//Check if owner
 			if (req.isAuthenticated()){
+				console.log(listing);
 				isOwner = ((listing.user_id == req.user._id) || (req.user.username == "admin"));
 				res.render("listing.ejs", {owner: isOwner, listing: listing, authed: true});
 			}

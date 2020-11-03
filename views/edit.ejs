@@ -3,18 +3,35 @@
 
 <h2> Welcome back <%=username%> </h2>
 <form action="/listing/<%=listing._id%>?_method=PUT" method="POST">
-	<input type="text" value="<%=listing.title%>" name="listing[title]" maxlength="90"/> <br>
-	<input type="text" value="<%=listing.desc%>" name="listing[desc]" maxlength="280"/><br>
-		<textarea type="text" placeholder="Full Description" name="fullDesc" maxlength="2000"></textarea><br>
-	<input type="url" value="<%=listing.img%>" name="listing[img]"/><br>
-	<input type="number" step=".01" value="<%=listing.price%>" min="0.1" name="listing[price]"/><br>
-	<button type="submit" class="btn btn-success">
-		Update listing
-	</button>
+	<div class="form-group">
+		<label for="title">Title</label>
+		<input type="text" class="form-control" id="title" value="<%=listing.title%>" name="listing[title]" maxlength="90"/>
+	</div>
+	<div class="form-group">
+		<label for="desc">Short Description</label>
+		<input type="text" class="form-control" id="desc" value="<%=listing.desc%>" name="listing[desc]" maxlength="280"/>
+	</div>
+	<div class="form-group">
+		<label for="fullDesc">Full Description</label>
+		<textarea type="text" class="form-control" id="fullDesc" name="fullDesc[fullDesc]" maxlength="2000">
+			<%=listing.fullDesc%>
+		</textarea>
+	</div>
+	<div class="form-group">
+		<label for="img">Image Link</label>
+		<input type="url" class="form-control" id="img" value="<%=listing.img%>" name="listing[img]"/>
+	</div>
+	<div class="form-group">
+		<label for="price">Price</label>
+		<input type="number" class="form-control" id="price" value="<%=listing.price%>" name="listing[price]" step=".01" min="0.1"/>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary"> Update listing </button>
+	</div>	
 </form>
 <br>
 
-<a class="btn btn-primary" href="/listing/">Back to Listing</a><br>
+<a class="btn btn-primary" href="/listing/<%=listing._id%>">Back to Listing</a><br>
 <a class="btn btn-danger" href="/logout">Logout</a><br>
 
 <%- include("parts/footer.ejs")%>

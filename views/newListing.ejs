@@ -2,17 +2,31 @@
 <%- include("parts/navbar.ejs")%>
 
 <h2> Welcome back <%=username%> </h2>
-	<form action="/newListing" method="POST">
-		<input type="text" placeholder="Title" name="title" maxlength="90"/> <br>
-		<input type="text" placeholder="Short Description" name="desc" maxlength="280"/><br>
-		<textarea type="text" placeholder="Full Description" name="fullDesc" maxlength="2000"></textarea><br>
-		<input type="url" placeholder="Image Link" name="img"/><br>
-		<input type="number" step=".01" placeholder="Price" min="0.1" name="price"/><br>
-		<button type="submit" class="btn btn-success">
-			Create listing
-		</button>
-		
-	</form>
+<form action="/newListing" method="POST">
+	<div class="form-group">
+		<label for="title">Title</label>
+		<input type="text" class="form-control" id="title" placeholder="Title" name="title" maxlength="90"/>
+	</div>
+	<div class="form-group">
+		<label for="desc">Short Description</label>
+		<input type="text" class="form-control" id="desc" placeholder="Short Description" name="desc" maxlength="280"/>
+	</div>
+	<div class="form-group">
+		<label for="fullDesc">Full Description</label>
+		<textarea type="text" class="form-control" id="fullDesc" placeholder="Full Description" name="fullDesc" maxlength="2000"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="img">Image Link</label>
+		<input type="url" class="form-control" id="img" placeholder="Title" name="img"/>
+	</div>
+	<div class="form-group">
+		<label for="price">Price</label>
+		<input type="number" class="form-control" id="price" placeholder="Title" name="price" step=".01" min="0.1"/>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary"> Create listing </button>
+	</div>	
+</form>
 
 <br>
 	
