@@ -19,6 +19,10 @@
 	<div class="col-lg-4"> 
 <%} %>
 	<div style="border-color: #333333;background-color:#121212;border-width:5px;border-style: solid;margin: 10px;height:100%;width:100%">
+	<div style="width=100%">
+	<img src='<%=listings[i].img%>' class="cover"> </img>
+	</div>
+		
 	<div style="margin: 10px;">
 	<div>
 		<div style="text-align: center">
@@ -33,7 +37,7 @@
 		<%=listings[i].desc%>
 	</div>
 	<br>
-	<img src='<%=listings[i].img%>' style="width:auto;height:auto; max-width:15vw;max-height:15vw;margin:auto;display:block"> </img>
+	
 	<br>
 	Listed by: <%=listings[i].lister%>
 	</div>
