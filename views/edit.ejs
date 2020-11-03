@@ -2,12 +2,12 @@
 <%- include("parts/navbar.ejs")%>
 
 <h2> Welcome back <%=username%> </h2>
-<form action="/newListing" method="POST">
-	<input type="text" placeholder="<%=listing.title%>" name="title"/> <br>
-	<input type="text" placeholder="<%=listing.desc%>" name="desc"/><br>
-	<input type="text" placeholder="<%=listing.fullDesc%>" name="fullDesc"/><br>
-	<input type="url" placeholder="<%=listing.img%>" name="img"/><br>
-	<input type="number" step=".01" placeholder="<%=listing.price%>" min="0.1" name="price"/><br>
+<form action="/listing/<%=listing._id%>?_method=PUT" method="POST">
+	<input type="text" value="<%=listing.title%>" name="listing[title]"/> <br>
+	<input type="text" value="<%=listing.desc%>" name="listing[desc]"/><br>
+	<input type="text" value="<%=listing.fullDesc%>" name="listing[fullDesc]"/><br>
+	<input type="url" value="<%=listing.img%>" name="listing[img]"/><br>
+	<input type="number" step=".01" value="<%=listing.price%>" min="0.1" name="listing[price]"/><br>
 	<button type="submit" class="btn btn-success">
 		Update listing
 	</button>
