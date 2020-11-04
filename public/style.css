@@ -4,6 +4,10 @@ body{
 	word-wrap: break-word;
 }
 
+a{
+	text-decoration: none;
+}
+
 .jumbotron {
   background-color: #212121;
 }
