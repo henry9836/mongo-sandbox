@@ -3,4 +3,4 @@
 
 [Go To Website](https://mongosandbox.herokuapp.com/)
 
-Description coming soon...
+A small web project where you can create listings. I am not responible for what people may list.
